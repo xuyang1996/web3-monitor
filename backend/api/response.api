@@ -1,0 +1,17 @@
+syntax = "v1"
+
+import (
+	"common.api"
+)
+
+type (
+	CommonResponse {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+	}
+
+	ReadTaskResponse {
+		CommonResponse
+		Data []TaskInfo `json:"data,optional"`
+	}
+)

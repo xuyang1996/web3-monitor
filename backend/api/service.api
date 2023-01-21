@@ -1,0 +1,44 @@
+syntax = "v1"
+
+import (
+	"common.api"
+	"request.api"
+	"response.api"
+)
+
+@server(
+	prefix: /v1/task
+	group: task
+	middleware: AuthRequest
+)
+service main-api {
+	@doc "CreateTaskHandler"
+	@handler CreateTaskHandler
+	post / (CreateTaskRequest) returns (CommonResponse);
+	
+	@doc "ReadTaskHandler"
+	@handler ReadTaskHandler
+	get / (ReadTaskRequest) returns (ReadTaskResponse);
+	
+	@doc "DeleteTaskHandler"
+	@handler DeleteTaskHandler
+	delete / (DeleteTaskRequest) returns (CommonResponse);
+	
+	@doc "UpdateTaskHandler"
+	@handler UpdateTaskHandler
+	patch / (UpdateTaskRequest) returns (CommonResponse);
+}
+
+@server(
+	prefix: /v1/user
+	group: user
+)
+service main-api {
+	@doc "LoginHandler"
+	@handler LoginHandler
+	post /login (LoginRequest) returns (CommonResponse);
+	
+	@doc "ChangeEmailHandler"
+	@handler ChangeEmailHandler
+	patch /email (ChangeEmailRequest) returns (CommonResponse);
+}
