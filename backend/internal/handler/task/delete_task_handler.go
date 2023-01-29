@@ -1,6 +1,7 @@
 package task
 
 import (
+	"backend/internal/util"
 	"net/http"
 
 	"backend/internal/logic/task"
@@ -13,7 +14,7 @@ func DeleteTaskHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.DeleteTaskRequest
 		if err := httpx.Parse(r, &req); err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
+			httpx.WriteJsonCtx(r.Context(), w, http.StatusBadRequest, util.FieldNotSetErrorResponse(err))
 			return
 		}
 

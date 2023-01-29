@@ -25,9 +25,16 @@ func NewErrorResponse(code int, message string) error {
 }
 
 func NewErrorResponseByCode(code int) error {
-	message, ok := MessageMap[code];
+	message, ok := MessageMap[code]
 	if !ok {
 		return NewErrorResponse(Unknown, MessageMap[Unknown])
 	}
 	return NewErrorResponse(code, message)
+}
+
+func FieldNotSetErrorResponse(err error) error {
+	if err != nil {
+		return NewErrorResponse(FieldNotSet, err.Error())
+	}
+	return NewErrorResponse(Unknown, MessageMap[Unknown])
 }

@@ -22,6 +22,11 @@ func (m *AuthRequestMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 				util.NewErrorResponseByCode(util.FailToGetSignatureOrAccount))
 			return
 		}
+		if !util.VerifySignature(account, signature) {
+			httpx.WriteJsonCtx(r.Context(), w, http.StatusUnauthorized,
+				util.NewErrorResponseByCode(util.FailToVerifySignature))
+			return
+		}
 		next(w, r)
 	}
 }
