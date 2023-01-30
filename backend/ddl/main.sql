@@ -10,7 +10,7 @@ CREATE TABLE `user`
   PRIMARY KEY (`id`),
   INDEX(`account`),
   INDEX(`signature`),
-  INDEX(`email`),
+  INDEX(`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `userTask`
@@ -25,7 +25,7 @@ CREATE TABLE `userTask`
   `updateTime` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
   PRIMARY KEY (`id`),
   INDEX(`account`),
-  INDEX(`address`),
+  INDEX(`address`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `transferTxn`
@@ -39,11 +39,11 @@ CREATE TABLE `transferTxn`
   `from` VARCHAR(64) NOT NULL,
   `to` VARCHAR(64) NOT NULL,
   `value` VARCHAR(128) NOT NULL,
-  `create_time` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-  `update_time` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  `createTime` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `updateTime` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
   PRIMARY KEY (`id`),
   INDEX(`blockNumber`),
   INDEX(`hash`),
   INDEX(`from`),
-  INDEX(`to`),
+  INDEX(`to`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
