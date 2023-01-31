@@ -1,8 +1,9 @@
 package util
 
 import (
-	"backend/internal/types"
 	"encoding/json"
+
+	"backend/internal/types"
 )
 
 func NewCommonResponseByCode(code int) *types.CommonResponse {
@@ -23,6 +24,13 @@ func (e *ErrorResponse) Error() string {
 		return err.Error()
 	}
 	return string(jsonBytes)
+}
+
+func (e *ErrorResponse) Data() *types.CommonResponse {
+	return &types.CommonResponse{
+		Code:    e.Code,
+		Message: e.Message,
+	}
 }
 
 func NewErrorResponse(code int, message string) error {

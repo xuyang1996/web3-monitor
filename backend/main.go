@@ -1,16 +1,21 @@
 package main
 
 import (
-	"backend/internal/config"
-	"backend/internal/handler"
-	"backend/internal/svc"
+	"context"
+	"errors"
 	"flag"
 	"fmt"
-	"github.com/zeromicro/go-zero/core/logx"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest"
+	"github.com/zeromicro/go-zero/rest/httpx"
+
+	"backend/internal/config"
+	"backend/internal/handler"
+	"backend/internal/svc"
+	"backend/internal/util"
 )
 
 var configFile = flag.String("f", "etc/main-api.yaml", "the config file")
@@ -37,14 +42,14 @@ func main() {
 	logx.DisableStat()
 
 	// Custom error
-	//httpx.SetErrorHandler(func(err error) (int, interface{}) {
-	//	switch e := err.(type) {
-	//	case *util.ErrorResponse:
-	//		return http.StatusOK, e
-	//	default:
-	//		return http.StatusInternalServerError, nil
-	//	}
-	//})
+	httpx.SetErrorHandlerCtx(func(ctx context.Context, err error) (int, interface{}) {
+		switch e := err.(type) {
+		case *util.ErrorResponse:
+			return http.StatusInternalServerError, e.Data()
+		default:
+			return http.StatusInternalServerError, errors.New(util.MessageMap[util.Unknown])
+		}
+	})
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
