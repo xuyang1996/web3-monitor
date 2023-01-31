@@ -1,12 +1,14 @@
 package util
 
 const (
-	Unknown                     = -1
-	Success                     = 0
-	FailToAccessDB              = 1000
-	FieldNotSet                 = 2000
+	Unknown        = -1
+	Success        = 0
+	FailToAccessDB = 1000
+	FieldNotSet    = 1001
+
 	FailToGetSignatureOrAccount = 2001
 	FailToVerifySignature       = 2002
+	FailToGetAccount            = 2003
 )
 
 var MessageMap = map[int]string{
@@ -15,6 +17,7 @@ var MessageMap = map[int]string{
 	FailToAccessDB:              "fail to access database",
 	FailToGetSignatureOrAccount: "fail to get signature or account from header",
 	FailToVerifySignature:       "fail to verify signature",
+	FailToGetAccount:            "fail to get account",
 }
 
 const (

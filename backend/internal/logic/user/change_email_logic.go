@@ -3,10 +3,11 @@ package user
 import (
 	"context"
 
+	"github.com/zeromicro/go-zero/core/logx"
+
 	"backend/internal/svc"
 	"backend/internal/types"
-
-	"github.com/zeromicro/go-zero/core/logx"
+	"backend/internal/util"
 )
 
 type ChangeEmailLogic struct {
@@ -24,7 +25,19 @@ func NewChangeEmailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Chang
 }
 
 func (l *ChangeEmailLogic) ChangeEmail(req *types.ChangeEmailRequest) (resp *types.CommonResponse, err error) {
-	// todo: add your logic here and delete this line
+	user, err := l.svcCtx.UserModel.FindOneByAccount(l.ctx, req.Account)
+	if err != nil {
+		return nil, util.NewErrorResponseByCode(util.FailToAccessDB)
+	}
 
-	return
+	if user == nil {
+		return util.NewCommonResponseByCode(util.FailToGetAccount), nil
+	}
+
+	user.Email = req.Email
+	err = l.svcCtx.UserModel.Update(l.ctx, user)
+	if err != nil {
+		return nil, util.NewErrorResponseByCode(util.FailToAccessDB)
+	}
+	return util.NewCommonResponseByCode(util.Success), nil
 }
