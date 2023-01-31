@@ -5,6 +5,14 @@ import (
 	"encoding/json"
 )
 
+func NewCommonResponseByCode(code int) *types.CommonResponse {
+	message, _ := MessageMap[code]
+	return &types.CommonResponse{
+		Code:    code,
+		Message: message,
+	}
+}
+
 type ErrorResponse struct {
 	types.CommonResponse
 }

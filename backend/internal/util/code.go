@@ -14,3 +14,10 @@ var MessageMap = map[int]string{
 	FailToGetSignatureOrAccount: "fail to get signature or account from header",
 	FailToVerifySignature:       "fail to verify signature",
 }
+
+const (
+	UserActiveStatus       = "active"
+	UserInactiveStatus     = "inactive"
+	UserTaskActiveStatus   = "active"
+	UserTaskInactiveStatus = "inactive"
+)

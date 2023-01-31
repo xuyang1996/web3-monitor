@@ -3,17 +3,19 @@ package user
 import (
 	"net/http"
 
+	"github.com/zeromicro/go-zero/rest/httpx"
+
 	"backend/internal/logic/user"
 	"backend/internal/svc"
 	"backend/internal/types"
-	"github.com/zeromicro/go-zero/rest/httpx"
+	"backend/internal/util"
 )
 
 func ChangeEmailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.ChangeEmailRequest
 		if err := httpx.Parse(r, &req); err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
+			httpx.WriteJsonCtx(r.Context(), w, http.StatusBadRequest, util.FieldNotSetErrorResponse(err))
 			return
 		}
 
