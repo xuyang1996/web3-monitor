@@ -23,10 +23,6 @@ service main-api {
 	@doc "DeleteTaskHandler"
 	@handler DeleteTaskHandler
 	delete / (DeleteTaskRequest) returns (CommonResponse);
-	
-	@doc "UpdateTaskHandler"
-	@handler UpdateTaskHandler
-	patch / (UpdateTaskRequest) returns (CommonResponse);
 }
 
 @server(

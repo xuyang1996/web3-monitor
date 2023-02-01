@@ -31,7 +31,8 @@ type CreateTaskRequest struct {
 }
 
 type TaskFilterInfo struct {
-	Id      int64  `form:"Id,optional"`
+	Id      int64  `form:"id,optional"`
+	Account string `form:"account,optional"`
 	Chain   int32  `form:"chain,optional"`
 	Address string `form:"address,optional"`
 	Type    string `form:"type,optional"`
@@ -43,11 +44,8 @@ type ReadTaskRequest struct {
 }
 
 type DeleteTaskRequest struct {
-	TaskFilterInfo
-}
-
-type UpdateTaskRequest struct {
-	Id int64 `form:"Id"`
+	IdArray []int64 `json:"id_array"`
+	Account string  `json:"account"`
 }
 
 type CommonResponse struct {

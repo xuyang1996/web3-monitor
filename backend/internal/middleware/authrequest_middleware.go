@@ -19,7 +19,7 @@ func (m *AuthRequestMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 		signature := r.Header.Get("signature")
 		if len(account) == 0 || len(signature) == 0 {
 			httpx.WriteJsonCtx(r.Context(), w, http.StatusBadRequest,
-				util.NewErrorResponseByCode(util.FailToGetSignatureOrAccount))
+				util.NewErrorResponseByCode(util.FailToGetSignatureOrAccountFromHeader))
 			return
 		}
 		if !util.VerifySignature(account, signature) {

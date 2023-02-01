@@ -2,11 +2,11 @@ package task
 
 import (
 	"context"
+	"github.com/zeromicro/go-zero/core/logx"
 
 	"backend/internal/svc"
 	"backend/internal/types"
-
-	"github.com/zeromicro/go-zero/core/logx"
+	"backend/internal/util"
 )
 
 type DeleteTaskLogic struct {
@@ -24,7 +24,24 @@ func NewDeleteTaskLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 }
 
 func (l *DeleteTaskLogic) DeleteTask(req *types.DeleteTaskRequest) (resp *types.CommonResponse, err error) {
-	// todo: add your logic here and delete this line
+	tasks, err := l.svcCtx.UserTaskModel.FindByAccount(l.ctx, req.Account)
+	if err != nil {
+		return nil, util.NewErrorResponseByCode(util.FailToAccessDB)
+	}
 
-	return
+	taskIdMap := make(map[int64]bool)
+	for _, task := range tasks {
+		taskIdMap[task.Id] = true
+	}
+	for _, id := range req.IdArray {
+		if _, ok := taskIdMap[id]; !ok {
+			return nil, util.NewErrorResponseByCode(util.InvalidIdArrayForThisAccount)
+		}
+	}
+
+	err = l.svcCtx.UserTaskModel.BatchUpdateStatusById(l.ctx, util.UserTaskInactiveStatus, req.IdArray)
+	if err != nil {
+		return nil, util.NewErrorResponseByCode(util.FailToAccessDB)
+	}
+	return util.NewCommonResponseByCode(util.Success), nil
 }

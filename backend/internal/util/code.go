@@ -6,23 +6,34 @@ const (
 	FailToAccessDB = 1000
 	FieldNotSet    = 1001
 
-	FailToGetSignatureOrAccount = 2001
-	FailToVerifySignature       = 2002
-	FailToGetAccount            = 2003
+	FailToGetSignatureOrAccountFromHeader = 2001
+	FailToVerifySignature                 = 2002
+	FailToGetAccount                      = 2003
+	FailToGetIdOrAccountFromPath          = 2004
+	InvalidIdArrayForThisAccount          = 2005
+	DuplicateUserTasks                    = 2006
 )
 
 var MessageMap = map[int]string{
-	Unknown:                     "unknown error",
-	Success:                     "success",
-	FailToAccessDB:              "fail to access database",
-	FailToGetSignatureOrAccount: "fail to get signature or account from header",
-	FailToVerifySignature:       "fail to verify signature",
-	FailToGetAccount:            "fail to get account",
+	Unknown:                               "unknown error",
+	Success:                               "success",
+	FailToAccessDB:                        "fail to access database",
+	FailToGetSignatureOrAccountFromHeader: "fail to get signature or account from header",
+	FailToVerifySignature:                 "fail to verify signature",
+	FailToGetAccount:                      "fail to get account",
+	FailToGetIdOrAccountFromPath:          "fail to get id or account from path",
+	InvalidIdArrayForThisAccount:          "invalid id array for this account",
+	DuplicateUserTasks:                    "duplicate user tasks",
 }
 
 const (
-	UserActiveStatus       = "active"
-	UserInactiveStatus     = "inactive"
-	UserTaskActiveStatus   = "active"
-	UserTaskInactiveStatus = "inactive"
+	UserActiveStatus       = "ACTIVE"
+	UserInactiveStatus     = "INACTIVE"
+	UserTaskActiveStatus   = "ACTIVE"
+	UserTaskInactiveStatus = "INACTIVE"
+	EoaAccount             = "EOA"
+	ContractAccount        = "CONTRACT"
 )
+
+// BNB 56
+// ETH 1

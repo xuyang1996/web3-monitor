@@ -31,11 +31,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/",
 					Handler: task.DeleteTaskHandler(serverCtx),
 				},
-				{
-					Method:  http.MethodPatch,
-					Path:    "/",
-					Handler: task.UpdateTaskHandler(serverCtx),
-				},
 			}...,
 		),
 		rest.WithPrefix("/v1/task"),

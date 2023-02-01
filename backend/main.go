@@ -35,7 +35,7 @@ func main() {
 	// global middleware
 	server.Use(func(next http.HandlerFunc) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {
-			logx.Infof("a new request comes, path: %s, header: %s", r.URL.Path, r.Header)
+			logx.Infof("a new request comes, method: %s, path: %s, header: %s", r.Method, r.URL.Path, r.Header)
 			next(w, r)
 		}
 	})
@@ -45,6 +45,9 @@ func main() {
 	httpx.SetErrorHandlerCtx(func(ctx context.Context, err error) (int, interface{}) {
 		switch e := err.(type) {
 		case *util.ErrorResponse:
+			if e.Code == util.FailToGetIdOrAccountFromPath || e.Code == util.InvalidIdArrayForThisAccount {
+				return http.StatusBadRequest, e.Data()
+			}
 			return http.StatusInternalServerError, e.Data()
 		default:
 			return http.StatusInternalServerError, errors.New(util.MessageMap[util.Unknown])
