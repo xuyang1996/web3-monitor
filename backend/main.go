@@ -35,7 +35,7 @@ func main() {
 	// global middleware
 	server.Use(func(next http.HandlerFunc) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {
-			logx.Infof("a new request comes, method: %s, path: %s, header: %s", r.Method, r.URL.Path, r.Header)
+			logx.Infof("a new request comes, method: %s, path: %s, header: %s", r.Method, r.URL.String(), r.Header)
 			next(w, r)
 		}
 	})
